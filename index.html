@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" data-theme="light">
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Catatan Keuangan Rizki</title>
   <meta name="description" content="Aplikasi pencatatan keuangan mandiri modern dengan multi-rekening saldo awal, transfer antar akun, kelola kategori kustom, target tabungan bulanan, dan sinkronisasi data cloud multi-perangkat." />
 
@@ -15,20 +15,17 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="format-detection" content="telephone=no" />
 
-  <!-- Fonts & Stylesheet (Option 2: Cyberpunk & Futuristic - Orbitron, Chakra Petch, Outfit, Space Mono) -->
+  <!-- Fonts & Stylesheet (Plus Jakarta Sans & Native System Fonts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Orbitron:wght@500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=2.3" />
 
   <!-- Chart.js CDN for interactive visual analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
-
-  <!-- Ambient Glow Elements -->
-  <div class="ambient-glow" aria-hidden="true"></div>
 
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
@@ -38,11 +35,11 @@
     <div class="nav-content">
       <div class="brand-logo">
         <div class="brand-icon-wrapper">
-          <svg class="svg-icon" style="width: 22px; height: 22px;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <svg class="svg-icon" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="17" cy="15" r="1.5"/></svg>
         </div>
         <div>
-          <span class="brand-title">FinSmart <span style="font-size: 0.6em; color: #FF4655; font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.08em;">// VLR</span></span>
-          <span class="brand-subtitle">Smart Tactical Finance</span>
+          <span class="brand-title">FinSmart</span>
+          <span class="brand-subtitle">Pencatatan Keuangan</span>
         </div>
       </div>
 
@@ -327,22 +324,22 @@
               <input type="text" id="searchInput" class="form-input" placeholder="Cari transaksi..." />
             </div>
 
-            <select id="filterType" class="form-select" style="width: auto; min-width: 105px;">
+            <select id="filterType" class="form-select">
               <option value="all">Semua Jenis</option>
               <option value="expense">Pengeluaran</option>
               <option value="income">Pemasukan</option>
               <option value="transfer">Transfer</option>
             </select>
 
-            <select id="filterAccount" class="form-select" style="width: auto; min-width: 110px;">
+            <select id="filterAccount" class="form-select">
               <option value="all">Semua Akun</option>
             </select>
 
-            <select id="filterCategory" class="form-select" style="width: auto; min-width: 115px;">
+            <select id="filterCategory" class="form-select">
               <option value="all">Semua Kategori</option>
             </select>
 
-            <input type="month" id="filterMonth" class="form-input" style="width: auto;" title="Filter Bulan" />
+            <input type="month" id="filterMonth" class="form-input" title="Filter Bulan" />
           </div>
 
           <!-- Transaction List Container -->
@@ -409,12 +406,14 @@
 
       <!-- View Mode Selector (Laporan Bulan Ini vs Matriks Komparasi Tahunan) -->
       <div class="matrix-mode-bar">
-        <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
+        <div style="display: flex; gap: 0.45rem; flex-wrap: wrap; width: 100%;">
           <button type="button" id="btnViewSingleMonth" class="btn btn-primary btn-sm" onclick="setAnalyticsViewMode('single')">
-            <span>📅</span> Rekap Bulan Ini (<span class="month-label-inline">Bulan Ini</span>)
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Rekap Bulanan</span>
           </button>
           <button type="button" id="btnViewMatrixAll" class="btn btn-secondary btn-sm" onclick="setAnalyticsViewMode('matrix')">
-            <span>🗓️</span> Tabel Matriks Per Kategori Semua Bulan
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Matriks Tahunan</span>
           </button>
         </div>
       </div>
@@ -911,24 +910,24 @@
 
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="toggleTheme()">
             <div class="manage-item-info">
-              <svg class="svg-icon" style="width: 20px; height: 20px; color: #ECE8E1;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: var(--accent-emerald);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
               <div>
                 <div class="manage-item-name">Ganti Tema (Gelap / Terang)</div>
-                <div class="manage-item-sub">Ubah tampilan antara Valorant Dark &amp; Light</div>
+                <div class="manage-item-sub">Ubah tampilan antara Mode Gelap &amp; Mode Terang</div>
               </div>
             </div>
             <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg>
           </div>
 
-          <div class="manage-item" style="padding: 0.85rem; border-color: rgba(255, 70, 85, 0.4); cursor: pointer;" onclick="resetAllData()">
+          <div class="manage-item" style="padding: 0.85rem; border-color: rgba(239, 68, 68, 0.4); cursor: pointer;" onclick="resetAllData()">
             <div class="manage-item-info">
-              <svg class="svg-icon" style="width: 20px; height: 20px; color: #FF4655;" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: var(--accent-rose);" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
               <div>
-                <div class="manage-item-name" style="color: #FF4655;">Reset Semua Data</div>
+                <div class="manage-item-name" style="color: var(--accent-rose);">Reset Semua Data</div>
                 <div class="manage-item-sub">Hapus seluruh data keuangan lokal dan kembalikan ke default</div>
               </div>
             </div>
-            <span style="color: #FF4655;">⚠️</span>
+            <span style="color: var(--accent-rose);">⚠️</span>
           </div>
 
         </div>
@@ -937,7 +936,7 @@
 
   </main>
 
-  <!-- Mobile Bottom App Bar Navigation (Android / iOS / HarmonyOS - Valorant HUD) -->
+  <!-- Mobile Bottom App Bar Navigation -->
   <nav class="mobile-bottom-nav" aria-label="Navigasi Bawah Mobile">
     <div class="mobile-nav-items">
       <button class="mobile-nav-item active" data-mobile-tab="dashboard" onclick="switchTab('dashboard')">
@@ -1414,7 +1413,7 @@
   </div>
 
   <!-- Main JavaScript App Logic -->
-  <script src="app.js"></script>
+  <script src="app.js?v=2.2"></script>
 
   <!-- Inline Form & Category Modal Helper Scripts -->
   <script>

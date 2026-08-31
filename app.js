@@ -172,13 +172,31 @@ function ensureCategoriesStructure(cats) {
   return cats;
 }
 
+// --- Safe LocalStorage Access Helpers (Guards iOS Private Browsing & Strict WebViews) ---
+function safeGetStorage(key, fallback) {
+  try {
+    const val = localStorage.getItem(key);
+    return val ? JSON.parse(val) : fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function safeSetStorage(key, value) {
+  try {
+    localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+  } catch (e) {
+    console.warn('Storage write failed:', e);
+  }
+}
+
 // --- App State Management ---
 const state = {
-  accounts: JSON.parse(localStorage.getItem('finsmart_accounts')) || DEFAULT_ACCOUNTS,
-  categories: ensureCategoriesStructure(JSON.parse(localStorage.getItem('finsmart_categories'))),
-  transactions: JSON.parse(localStorage.getItem('finsmart_tx')) || getInitialDemoData(),
-  goals: JSON.parse(localStorage.getItem('finsmart_goals')) || getInitialGoals(),
-  monthlyTargets: JSON.parse(localStorage.getItem('finsmart_monthly_targets')) || DEFAULT_MONTHLY_TARGETS,
+  accounts: safeGetStorage('finsmart_accounts', DEFAULT_ACCOUNTS),
+  categories: ensureCategoriesStructure(safeGetStorage('finsmart_categories', DEFAULT_CATEGORIES)),
+  transactions: safeGetStorage('finsmart_tx', getInitialDemoData()),
+  goals: safeGetStorage('finsmart_goals', getInitialGoals()),
+  monthlyTargets: safeGetStorage('finsmart_monthly_targets', DEFAULT_MONTHLY_TARGETS),
   syncKey: getInitialSyncKey(),
   googleSheetUrl: getInitialGoogleSheetUrl(),
   isSyncing: false,
@@ -201,11 +219,11 @@ const state = {
 
 // --- Storage & Cloud / Google Sheets Sync Helper ---
 function saveToStorage() {
-  localStorage.setItem('finsmart_accounts', JSON.stringify(state.accounts));
-  localStorage.setItem('finsmart_categories', JSON.stringify(state.categories));
-  localStorage.setItem('finsmart_tx', JSON.stringify(state.transactions));
-  localStorage.setItem('finsmart_goals', JSON.stringify(state.goals));
-  localStorage.setItem('finsmart_monthly_targets', JSON.stringify(state.monthlyTargets));
+  safeSetStorage('finsmart_accounts', state.accounts);
+  safeSetStorage('finsmart_categories', state.categories);
+  safeSetStorage('finsmart_tx', state.transactions);
+  safeSetStorage('finsmart_goals', state.goals);
+  safeSetStorage('finsmart_monthly_targets', state.monthlyTargets);
 
   // Trigger Cloud Auto-Sync if sync key is configured
   if (state.syncKey) {
@@ -821,24 +839,24 @@ function fallbackCopyText(text) {
   document.body.removeChild(textArea);
 }
 
-// --- Theme Management (Valorant Design System) ---
+// --- Theme Management ---
 function initTheme() {
-  const savedTheme = localStorage.getItem('finsmart_theme') || 'dark';
+  const savedTheme = safeGetStorage('finsmart_theme', 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
   updateThemeIcon(savedTheme);
   updateMetaThemeColor(savedTheme);
 }
 
 function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('finsmart_theme', newTheme);
+  safeSetStorage('finsmart_theme', newTheme);
   updateThemeIcon(newTheme);
   updateMetaThemeColor(newTheme);
 
   renderMonthlyAnalytics();
-  showToast(`Beralih ke mode ${newTheme === 'dark' ? 'Valorant Dark' : 'Clean Light'}`, 'info');
+  showToast(`Beralih ke mode ${newTheme === 'dark' ? 'Gelap' : 'Terang'}`, 'info');
 }
 
 function updateThemeIcon(theme) {
@@ -846,7 +864,7 @@ function updateThemeIcon(theme) {
   if (btn) {
     if (theme === 'light') {
       btn.innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-      btn.title = 'Ubah ke Mode Valorant Dark';
+      btn.title = 'Ubah ke Mode Gelap';
     } else {
       btn.innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
       btn.title = 'Ubah ke Mode Terang';
@@ -857,7 +875,7 @@ function updateThemeIcon(theme) {
 function updateMetaThemeColor(theme) {
   const meta = document.getElementById('metaThemeColor');
   if (meta) {
-    meta.setAttribute('content', theme === 'dark' ? '#0F1923' : '#ECE8E1');
+    meta.setAttribute('content', theme === 'dark' ? '#0F172A' : '#F8FAFC');
   }
 }
 
@@ -1491,13 +1509,13 @@ function renderMonthlyAnalytics() {
           {
             label: 'Pemasukan',
             data: incArray,
-            backgroundColor: '#00F5D4',
+            backgroundColor: '#10B981',
             borderRadius: 4
           },
           {
             label: 'Pengeluaran',
             data: expArray,
-            backgroundColor: '#FF4655',
+            backgroundColor: '#EF4444',
             borderRadius: 4
           }
         ]
@@ -1508,13 +1526,13 @@ function renderMonthlyAnalytics() {
         scales: {
           x: {
             grid: { display: false },
-            ticks: { color: textColor, font: { family: 'Outfit', size: 9.5 }, maxRotation: 45 }
+            ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 9.5 }, maxRotation: 45 }
           },
           y: {
             grid: { color: gridColor },
             ticks: {
               color: textColor,
-              font: { family: 'Outfit', size: 10 },
+              font: { family: 'Plus Jakarta Sans', size: 10 },
               callback: function (val) {
                 return (val >= 1000000 ? (val / 1000000).toFixed(1) + ' jt' : (val / 1000) + ' rb');
               }
@@ -1526,7 +1544,7 @@ function renderMonthlyAnalytics() {
             position: 'top',
             labels: {
               color: textColor,
-              font: { family: 'Outfit', size: 11, weight: 600 },
+              font: { family: 'Plus Jakarta Sans', size: 11, weight: 600 },
               usePointStyle: true
             }
           },
@@ -1543,9 +1561,9 @@ function renderMonthlyAnalytics() {
   }
 
   // 8. Render Detailed Tables: Total Pengeluaran, Pemasukan, dan Transfer per Kategori Bulan Ini
-  renderMonthlyCategoryTable('monthExpenseCategoryTableBody', state.categories.expense || [], expenseCategoryTotals, expenseCategoryCounts, monthlyExpense, '#FF4655');
-  renderMonthlyCategoryTable('monthIncomeCategoryTableBody', state.categories.income || [], incomeCategoryTotals, incomeCategoryCounts, monthlyIncome, '#00F5D4');
-  renderMonthlyCategoryTable('monthTransferCategoryTableBody', state.categories.transfer || [], transferCategoryTotals, transferCategoryCounts, monthlyTransfer, '#FFC700');
+  renderMonthlyCategoryTable('monthExpenseCategoryTableBody', state.categories.expense || [], expenseCategoryTotals, expenseCategoryCounts, monthlyExpense, '#EF4444');
+  renderMonthlyCategoryTable('monthIncomeCategoryTableBody', state.categories.income || [], incomeCategoryTotals, incomeCategoryCounts, monthlyIncome, '#10B981');
+  renderMonthlyCategoryTable('monthTransferCategoryTableBody', state.categories.transfer || [], transferCategoryTotals, transferCategoryCounts, monthlyTransfer, '#6366F1');
 
   // 9. Render Transfer Recap Module
   renderMonthlyTransferRecap(monthlyTransferList, transferRoutes, monthlyTransfer, monthlyTransferFee);
