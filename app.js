@@ -46,6 +46,37 @@ const DEFAULT_MONTHLY_TARGETS = {
   default: 2000000
 };
 
+// ==========================================================================
+// 🔗 DEFAULT DATABASE URL (Opsional: Masukkan Web App URL Google Sheets Anda di sini)
+// Jika diisi, semua HP & Laptop yang membuka link website akan OTOMATIS terhubung!
+// ==========================================================================
+const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxBauqf37U7jHit6jeqfHCwaxc8Enb61zXWCJwqU_45uiBZ7QHBQqRHYwwFVGyPxSRv/exec";
+
+// Helper untuk membaca konfigurasi dari URL Parameter atau LocalStorage
+function getInitialGoogleSheetUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const urlParam = params.get('sheet') || params.get('gsheet');
+    if (urlParam) {
+      localStorage.setItem('finsmart_gsheet_url', urlParam);
+      return urlParam;
+    }
+  } catch (e) { }
+  return localStorage.getItem('finsmart_gsheet_url') || DEFAULT_GOOGLE_SHEET_URL;
+}
+
+function getInitialSyncKey() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const keyParam = params.get('key') || params.get('sync');
+    if (keyParam) {
+      localStorage.setItem('finsmart_sync_key', keyParam);
+      return keyParam;
+    }
+  } catch (e) { }
+  return localStorage.getItem('finsmart_sync_key') || '';
+}
+
 // --- Initial Demo Transactions ---
 function getInitialDemoData() {
   const today = new Date();
@@ -96,46 +127,6 @@ function getInitialDemoData() {
       account: 'cash',
       date: `${year}-${month}-04`,
       note: 'Nasi padang + es teh'
-    },
-    {
-      id: 'tx_demo_5',
-      desc: 'Belanja Kebutuhan Dapur',
-      amount: 350000,
-      type: 'expense',
-      category: 'belanja',
-      account: 'mandiri',
-      date: `${year}-${month}-05`,
-      note: 'Minyak, beras, sayur, buah'
-    },
-    {
-      id: 'tx_demo_6',
-      desc: 'Order GoFood Makan Malam',
-      amount: 68000,
-      type: 'expense',
-      category: 'makanan',
-      account: 'gopay',
-      date: `${year}-${month}-06`,
-      note: 'Ayam geprek via Gopay'
-    },
-    {
-      id: 'tx_demo_7',
-      desc: 'Bonus Proyek Lepas',
-      amount: 1500000,
-      type: 'income',
-      category: 'usaha',
-      account: 'kaltimtara',
-      date: `${year}-${month}-10`,
-      note: 'Freelance pembuatan website'
-    },
-    {
-      id: 'tx_demo_8',
-      desc: 'Beli Bensin Mobil',
-      amount: 250000,
-      type: 'expense',
-      category: 'transport',
-      account: 'mandiri',
-      date: `${year}-${month}-12`,
-      note: 'Pertamax'
     }
   ];
 }
@@ -186,8 +177,8 @@ const state = {
   transactions: JSON.parse(localStorage.getItem('finsmart_tx')) || getInitialDemoData(),
   goals: JSON.parse(localStorage.getItem('finsmart_goals')) || getInitialGoals(),
   monthlyTargets: JSON.parse(localStorage.getItem('finsmart_monthly_targets')) || DEFAULT_MONTHLY_TARGETS,
-  syncKey: localStorage.getItem('finsmart_sync_key') || '',
-  googleSheetUrl: localStorage.getItem('finsmart_gsheet_url') || '',
+  syncKey: getInitialSyncKey(),
+  googleSheetUrl: getInitialGoogleSheetUrl(),
   isSyncing: false,
   filter: {
     search: '',
@@ -277,7 +268,7 @@ function showToast(message, type = 'success') {
 
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
-  
+
   let icon = '✅';
   if (type === 'danger') icon = '⚠️';
   if (type === 'info') icon = 'ℹ️';
@@ -831,7 +822,7 @@ function toggleTheme() {
   localStorage.setItem('finsmart_theme', newTheme);
   updateThemeIcon(newTheme);
   updateMetaThemeColor(newTheme);
-  
+
   renderMonthlyAnalytics();
   showToast(`Beralih ke mode ${newTheme === 'dark' ? 'Gelap 🌙' : 'Terang ☀️'}`, 'info');
 }
@@ -854,7 +845,7 @@ function updateMetaThemeColor(theme) {
 // --- Account Balance Calculation ---
 function calculateAccountBalances() {
   const balances = {};
-  
+
   // 1. Inisialisasi dengan Saldo Awal
   state.accounts.forEach(acc => {
     balances[acc.id] = Number(acc.initialBalance) || 0;
@@ -1505,7 +1496,7 @@ function renderMonthlyAnalytics() {
             ticks: {
               color: textColor,
               font: { family: 'Montserrat', size: 10 },
-              callback: function(val) {
+              callback: function (val) {
                 return (val >= 1000000 ? (val / 1000000).toFixed(1) + ' jt' : (val / 1000) + ' rb');
               }
             }
@@ -1522,7 +1513,7 @@ function renderMonthlyAnalytics() {
           },
           tooltip: {
             callbacks: {
-              label: function(ctx) {
+              label: function (ctx) {
                 return ` ${ctx.dataset.label}: ${formatRupiah(ctx.raw)}`;
               }
             }
@@ -1600,7 +1591,7 @@ function renderCategoryDonut(canvasId, categoriesList, totalsMap, instanceProp, 
         },
         tooltip: {
           callbacks: {
-            label: function(ctx) {
+            label: function (ctx) {
               return ` ${ctx.label}: ${formatRupiah(ctx.raw)}`;
             }
           }
@@ -2021,7 +2012,7 @@ function openAddTxModal(defaultType = 'expense') {
   state.editingTxId = null;
   document.getElementById('modalTitle').innerText = 'Tambah Transaksi Baru';
   document.getElementById('formTx').reset();
-  
+
   document.getElementById('formDate').value = new Date().toISOString().split('T')[0];
   document.getElementById('formAmountPreview').innerText = '';
 
@@ -2041,7 +2032,7 @@ function openEditTxModal(txId) {
 
   state.editingTxId = txId;
   document.getElementById('modalTitle').innerText = tx.type === 'transfer' ? 'Edit Transfer Dana' : 'Edit Transaksi';
-  
+
   document.getElementById('formDesc').value = tx.desc || '';
   document.getElementById('formAmount').value = tx.amount || '';
   document.getElementById('formAmountPreview').innerText = formatRupiah(tx.amount);
@@ -2248,7 +2239,7 @@ function handleAddNewAccount(e) {
   saveToStorage();
   renderManageAccountsList();
   refreshAll();
-  
+
   document.getElementById('formNewAccountName').value = '';
   document.getElementById('formNewAccountInitial').value = '';
   showToast(`Akun "${name}" berhasil ditambahkan! 💳`);
@@ -2489,7 +2480,7 @@ function handleRestoreJSON(event) {
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     try {
       const data = JSON.parse(e.target.result);
       if (Array.isArray(data.transactions)) {
