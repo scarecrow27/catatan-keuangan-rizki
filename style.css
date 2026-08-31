@@ -108,6 +108,35 @@
   --shadow-nav: 0 -4px 20px rgba(15, 25, 35, 0.08);
 }
 
+/* --- Base & Reset (iOS WebKit & Mobile Optimized) --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  min-height: 100dvh;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-bottom: calc(5.5rem + max(1rem, var(--safe-area-bottom)));
+}
+
 /* Ambient glow effect */
 .ambient-glow {
   position: fixed;
@@ -1754,8 +1783,24 @@
 }
 
 /* ==========================================================================
-   Responsive Breakpoints
+   Responsive Breakpoints & iOS Mobile Optimization
    ========================================================================== */
+
+/* No Scrollbar Utility */
+.no-scrollbar,
+.quick-chips-wrapper,
+.accounts-grid,
+.app-tabs {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.quick-chips-wrapper::-webkit-scrollbar,
+.accounts-grid::-webkit-scrollbar,
+.app-tabs::-webkit-scrollbar {
+  display: none;
+}
 
 @media (max-width: 860px) {
   .dashboard-grid {
@@ -1764,14 +1809,73 @@
 }
 
 @media (max-width: 768px) {
+  /* Prevent iOS Safari aggressive auto-zoom on input focus */
+  input, select, textarea, .form-input, .form-select, .form-textarea {
+    font-size: 16px !important;
+  }
+
   .mobile-bottom-nav {
     display: block;
+    padding: 0.35rem 0.5rem calc(0.35rem + max(0.65rem, var(--safe-area-bottom))) 0.5rem;
   }
+
   .app-tabs {
     display: none;
   }
+
   .desktop-only-btn {
     display: none !important;
+  }
+
+  .nav-content {
+    padding: 0 0.85rem;
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.65rem;
+  }
+
+  .brand-icon-wrapper {
+    width: 34px;
+    height: 34px;
+  }
+
+  .cloud-sync-pill {
+    padding: 0.28rem 0.5rem;
+    font-size: 0.68rem;
+    gap: 0.25rem;
+  }
+
+  /* Metrics layout for mobile: Top Hero Card + 2 side-by-side subcards */
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+
+  .metric-card.balance {
+    grid-column: 1 / -1;
+    padding: 1.1rem;
+  }
+
+  .metric-card.income, .metric-card.expense {
+    padding: 0.9rem;
+  }
+
+  .metric-card.balance .metric-value {
+    font-size: 1.45rem;
+  }
+
+  .metric-card.income .metric-value, .metric-card.expense .metric-value {
+    font-size: 1.1rem;
+  }
+
+  /* Accounts section & cards horizontal scroll */
+  .accounts-section {
+    padding: 0.9rem;
   }
 
   .accounts-grid {
@@ -1782,27 +1886,30 @@
     padding-bottom: 4px;
     gap: 0.75rem;
   }
+
   .account-card {
-    min-width: 200px;
+    min-width: 175px;
     flex: 0 0 auto;
     scroll-snap-align: start;
+    padding: 0.85rem;
   }
 
-  .metrics-grid {
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
-  }
-
+  /* Mobile Modals (Bottom Sheet) */
   .modal-overlay {
     align-items: flex-end;
     padding: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .modal-card {
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    max-height: 85vh;
-    padding: 1.25rem 1.25rem calc(1.5rem + var(--safe-area-bottom)) 1.25rem;
+    border-radius: 20px 20px 0 0;
+    max-height: 88vh;
+    width: 100vw;
+    max-width: 100vw;
+    padding: 1.25rem 1.15rem calc(1.5rem + max(1rem, var(--safe-area-bottom))) 1.15rem;
     transform: translateY(100%);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
   }
 
   .modal-overlay.open .modal-card {
@@ -1811,28 +1918,81 @@
 
   .modal-handle-bar {
     display: block;
+    width: 44px;
+    height: 5px;
+    background: var(--border-color);
+    border-radius: var(--radius-full);
+    margin: -0.5rem auto 1rem auto;
+  }
+
+  /* Form & inputs */
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .type-segmented {
+    margin-bottom: 0.75rem;
+  }
+
+  .type-btn {
+    padding: 0.48rem 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  /* Transaction Items */
+  .tx-item {
+    padding: 0.7rem 0.75rem;
+    gap: 0.4rem;
+  }
+
+  .tx-category-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+
+  .tx-desc {
+    font-size: 0.82rem;
+  }
+
+  .tx-amount {
+    font-size: 0.84rem;
   }
 
   .toast-container {
     left: 1rem;
     right: 1rem;
-    bottom: calc(5rem + var(--safe-area-bottom));
+    bottom: calc(5.5rem + max(0.5rem, var(--safe-area-bottom)));
   }
 }
 
 @media (max-width: 480px) {
-  html { font-size: 14px; }
-  .nav-content { padding: 0 0.75rem; }
-  .app-container { padding: 0 0.75rem; }
-  .form-row { grid-template-columns: 1fr; }
-  .type-segmented { font-size: 0.7rem; }
-  .metric-value { font-size: 1.25rem; }
-  .monthly-kpi-value { font-size: 1.2rem; }
+  html {
+    font-size: 14.5px;
+  }
+  .app-container {
+    padding: 0 0.65rem;
+  }
+  .card {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+  }
+  .quick-presets-section {
+    padding: 0.65rem 0.75rem;
+  }
+  .quick-presets-title {
+    font-size: 0.82rem;
+  }
+  .quick-chip {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
 }
 
 /* Print styles */
 @media print {
-  body { background: #FFF !important; color: #000 !important; }
+  body { background: #FFF !important; color: #00F5D4 !important; }
   .navbar, .mobile-bottom-nav, .quick-presets-section, .btn, .tx-actions, .filter-bar, .modal-overlay, .toast-container, .month-navigator button {
     display: none !important;
   }
