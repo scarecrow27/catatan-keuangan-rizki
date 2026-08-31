@@ -4,128 +4,108 @@
    Optimized for Android, iOS, HarmonyOS & Desktop
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Orbitron:wght@500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* --- CSS Variables & Color Tokens --- */
+/* --- CSS Variables & Color Tokens (Valorant Tactical Design System - Option 2 Font) --- */
 :root {
-  /* Light Theme */
-  --bg-body: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-surface-elevated: #FFFFFF;
-  --bg-surface-hover: #F1F5F9;
-  --bg-glass: rgba(255, 255, 255, 0.88);
-  --bg-glass-nav: rgba(255, 255, 255, 0.92);
+  /* Default / Valorant Tactical Dark */
+  --bg-body: #0F1923;
+  --bg-surface: #16222F;
+  --bg-surface-elevated: #1E2D3D;
+  --bg-surface-hover: #26384C;
+  --bg-glass: rgba(15, 25, 35, 0.92);
+  --bg-glass-nav: rgba(15, 25, 35, 0.96);
   
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #94A3B8;
-  --text-inverse: #FFFFFF;
+  --text-primary: #ECE8E1;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #0F1923;
   
-  --border-color: #E2E8F0;
-  --border-focus: #10B981;
-  --border-subtle: #F1F5F9;
+  --border-color: #263647;
+  --border-focus: #FF4655;
+  --border-subtle: #1C2B39;
 
-  --accent-emerald: #10B981;
-  --accent-emerald-soft: #D1FAE5;
-  --accent-emerald-dark: #059669;
-  --accent-emerald-glow: rgba(16, 185, 129, 0.2);
+  /* Valorant Core Brand Accents */
+  --vlr-red: #FF4655;
+  --vlr-cyan: #00F5D4;
+  --vlr-gold: #FFC700;
+  --vlr-white: #ECE8E1;
 
-  --accent-indigo: #6366F1;
-  --accent-indigo-soft: #E0E7FF;
-  --accent-indigo-dark: #4F46E5;
-  --accent-indigo-glow: rgba(99, 102, 241, 0.2);
+  --accent-emerald: #00F5D4;
+  --accent-emerald-soft: rgba(0, 245, 212, 0.14);
+  --accent-emerald-dark: #00C4AA;
+  --accent-emerald-glow: rgba(0, 245, 212, 0.28);
 
-  --accent-rose: #F43F5E;
-  --accent-rose-soft: #FFE4E6;
-  --accent-rose-dark: #E11D48;
-  --accent-rose-glow: rgba(244, 63, 94, 0.2);
+  --accent-indigo: #FF4655;
+  --accent-indigo-soft: rgba(255, 70, 85, 0.14);
+  --accent-indigo-dark: #E03544;
+  --accent-indigo-glow: rgba(255, 70, 85, 0.32);
 
-  --accent-amber: #F59E0B;
-  --accent-amber-soft: #FEF3C7;
-  --accent-amber-dark: #D97706;
+  --accent-rose: #FF4655;
+  --accent-rose-soft: rgba(255, 70, 85, 0.16);
+  --accent-rose-dark: #E03544;
+  --accent-rose-glow: rgba(255, 70, 85, 0.35);
 
-  --accent-cyan: #06B6D4;
-  --accent-cyan-soft: #CFFAFE;
+  --accent-amber: #FFC700;
+  --accent-amber-soft: rgba(255, 199, 0, 0.14);
+  --accent-amber-dark: #D4A300;
 
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.14), 0 10px 15px -5px rgba(15, 23, 42, 0.04);
-  --shadow-nav: 0 -4px 20px rgba(0, 0, 0, 0.07);
+  --accent-cyan: #00F5D4;
+  --accent-cyan-soft: rgba(0, 245, 212, 0.14);
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 26px;
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 25px 45px rgba(0, 0, 0, 0.65);
+  --shadow-nav: 0 -4px 25px rgba(0, 0, 0, 0.6);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  --font-main: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Option 2: Cyberpunk & Futuristic Font Family */
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Orbitron', 'Chakra Petch', 'Outfit', sans-serif;
+  --font-mono: 'Space Mono', monospace;
 
   --safe-area-top: env(safe-area-inset-top, 0px);
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-[data-theme="dark"] {
-  --bg-body: #090D16;
-  --bg-surface: #111827;
-  --bg-surface-elevated: #1A2234;
-  --bg-surface-hover: #242E44;
-  --bg-glass: rgba(17, 24, 39, 0.88);
-  --bg-glass-nav: rgba(17, 24, 39, 0.94);
+[data-theme="light"] {
+  --bg-body: #ECE8E1;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F6F4F0;
+  --bg-surface-hover: #E8E4DC;
+  --bg-glass: rgba(246, 244, 240, 0.9);
+  --bg-glass-nav: rgba(246, 244, 240, 0.95);
 
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --text-inverse: #0F172A;
+  --text-primary: #0F1923;
+  --text-secondary: #475569;
+  --text-muted: #8896A6;
+  --text-inverse: #FFFFFF;
 
-  --border-color: #1E293B;
-  --border-focus: #10B981;
-  --border-subtle: #1E293B;
+  --border-color: #D6D0C5;
+  --border-focus: #FF4655;
+  --border-subtle: #E8E4DC;
 
-  --accent-emerald-soft: rgba(16, 185, 129, 0.15);
-  --accent-indigo-soft: rgba(99, 102, 241, 0.15);
-  --accent-rose-soft: rgba(244, 63, 94, 0.15);
-  --accent-amber-soft: rgba(245, 158, 11, 0.15);
-  --accent-cyan-soft: rgba(6, 182, 212, 0.15);
+  --accent-emerald-soft: rgba(0, 196, 170, 0.15);
+  --accent-indigo-soft: rgba(255, 70, 85, 0.12);
+  --accent-rose-soft: rgba(255, 70, 85, 0.14);
+  --accent-amber-soft: rgba(212, 163, 0, 0.14);
 
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 25px 45px rgba(0, 0, 0, 0.6);
-  --shadow-nav: 0 -4px 25px rgba(0, 0, 0, 0.5);
-}
-
-/* --- Base & Reset --- */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html {
-  font-size: 15px;
-  scroll-behavior: smooth;
-  touch-action: manipulation;
-}
-
-body {
-  font-family: var(--font-main);
-  background-color: var(--bg-body);
-  color: var(--text-primary);
-  line-height: 1.5;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  transition: background-color var(--transition-normal), color var(--transition-normal);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding-bottom: calc(5.5rem + var(--safe-area-bottom));
+  --shadow-xs: 0 1px 2px 0 rgba(15, 25, 35, 0.06);
+  --shadow-sm: 0 2px 8px -2px rgba(15, 25, 35, 0.08);
+  --shadow-md: 0 10px 25px -5px rgba(15, 25, 35, 0.1), 0 8px 10px -6px rgba(15, 25, 35, 0.04);
+  --shadow-lg: 0 20px 35px -10px rgba(15, 25, 35, 0.14);
+  --shadow-nav: 0 -4px 20px rgba(15, 25, 35, 0.08);
 }
 
 /* Ambient glow effect */
@@ -144,24 +124,24 @@ body {
   content: '';
   position: absolute;
   top: -120px;
-  right: 10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0) 70%);
+  right: 8%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(255, 70, 85, 0.16) 0%, rgba(255, 70, 85, 0) 70%);
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(70px);
 }
 
 .ambient-glow::after {
   content: '';
   position: absolute;
-  top: 250px;
+  top: 300px;
   left: 5%;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0) 70%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 245, 212, 0.12) 0%, rgba(0, 245, 212, 0) 70%);
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(70px);
 }
 
 /* App Wrapper */
@@ -221,9 +201,10 @@ body {
 }
 
 .brand-title {
-  font-size: 1.15rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.02em;
   background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-emerald) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -231,11 +212,12 @@ body {
 }
 
 .brand-subtitle {
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
   color: var(--accent-emerald);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   display: block;
 }
 
@@ -252,8 +234,11 @@ body {
   gap: 0.35rem;
   padding: 0.35rem 0.65rem;
   border-radius: var(--radius-full);
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
@@ -288,23 +273,25 @@ body {
   to { transform: scale(1.2); opacity: 1; }
 }
 
-/* Base Buttons */
+/* Base Buttons (Valorant Tactical Buttons) */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  font-family: var(--font-main);
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 0.5rem 0.85rem;
-  border-radius: var(--radius-md);
+  gap: 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.48rem 0.95rem;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
   cursor: pointer;
   transition: all var(--transition-fast);
   user-select: none;
   white-space: nowrap;
   touch-action: manipulation;
+  text-transform: uppercase;
 }
 
 .btn:active {
@@ -312,19 +299,27 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-dark) 100%);
-  color: #FFFFFF;
-  box-shadow: 0 3px 12px var(--accent-emerald-glow);
+  background: linear-gradient(135deg, #FF4655 0%, #E03544 100%);
+  color: #ECE8E1;
+  border: 1px solid rgba(255, 70, 85, 0.4);
+  box-shadow: 0 3px 14px rgba(255, 70, 85, 0.35);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #18c78d 0%, #048259 100%);
+  background: linear-gradient(135deg, #FF5E6C 0%, #EA2A3B 100%);
+  box-shadow: 0 4px 20px rgba(255, 70, 85, 0.5);
 }
 
 .btn-transfer {
-  background: linear-gradient(135deg, var(--accent-indigo) 0%, var(--accent-indigo-dark) 100%);
-  color: #FFFFFF;
-  box-shadow: 0 3px 12px var(--accent-indigo-glow);
+  background: linear-gradient(135deg, #FFC700 0%, #D4A300 100%);
+  color: #0F1923;
+  border: 1px solid rgba(255, 199, 0, 0.4);
+  box-shadow: 0 3px 14px rgba(255, 199, 0, 0.3);
+}
+
+.btn-transfer:hover {
+  background: linear-gradient(135deg, #FFD533 0%, #E5B200 100%);
+  box-shadow: 0 4px 18px rgba(255, 199, 0, 0.45);
 }
 
 .btn-secondary {
@@ -335,28 +330,38 @@ body {
 
 .btn-secondary:hover {
   background: var(--bg-surface-hover);
+  border-color: #FF4655;
+  color: #FF4655;
 }
 
 .btn-icon-only {
   width: 36px;
   height: 36px;
   padding: 0;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: var(--bg-surface);
   color: var(--text-secondary);
   border: 1px solid var(--border-color);
   font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-only:hover {
+  border-color: #FF4655;
+  color: #ECE8E1;
 }
 
 .btn-danger {
   background: var(--accent-rose-soft);
   color: var(--accent-rose);
-  border-color: rgba(244, 63, 94, 0.2);
+  border-color: rgba(255, 70, 85, 0.3);
 }
 
 .btn-danger:hover {
-  background: var(--accent-rose);
-  color: #FFF;
+  background: #FF4655;
+  color: #ECE8E1;
 }
 
 .btn-sm {
@@ -364,14 +369,14 @@ body {
   font-size: 0.72rem;
 }
 
-/* Nav Tabs (Desktop) */
+/* Nav Tabs (Desktop - Valorant Tactical HUD Tabs) */
 .app-tabs {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   background: var(--bg-surface);
   padding: 0.35rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   margin-bottom: 1.25rem;
   box-shadow: var(--shadow-sm);
@@ -381,24 +386,32 @@ body {
 .tab-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 1.1rem;
-  border-radius: var(--radius-md);
-  border: none;
+  gap: 0.5rem;
+  padding: 0.52rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
   background: transparent;
   color: var(--text-secondary);
-  font-family: var(--font-main);
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
 }
 
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-hover);
+}
+
 .tab-btn.active {
-  background: var(--accent-emerald);
-  color: #FFFFFF;
-  box-shadow: 0 3px 10px var(--accent-emerald-glow);
+  background: linear-gradient(135deg, #FF4655 0%, #E03544 100%);
+  color: #ECE8E1;
+  border-color: rgba(255, 70, 85, 0.4);
+  box-shadow: 0 3px 14px rgba(255, 70, 85, 0.35);
 }
 
 /* Tab Panels */
@@ -416,7 +429,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Hero Metrics Grid (3 Cards) --- */
+/* --- Hero Metrics Grid (3 Cards - Valorant HUD Cards) --- */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -428,11 +441,16 @@ body {
   position: relative;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 1.1rem;
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
   overflow: hidden;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 70, 85, 0.4);
 }
 
 .metric-card::after {
@@ -441,19 +459,19 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 3.5px;
+  height: 3px;
 }
 
 .metric-card.balance::after {
-  background: linear-gradient(90deg, var(--accent-indigo), var(--accent-emerald));
+  background: linear-gradient(90deg, #FF4655, #00F5D4);
 }
 
 .metric-card.income::after {
-  background: var(--accent-emerald);
+  background: #00F5D4;
 }
 
 .metric-card.expense::after {
-  background: var(--accent-rose);
+  background: #FF4655;
 }
 
 .metric-header {
@@ -464,36 +482,40 @@ body {
 }
 
 .metric-title {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   color: var(--text-secondary);
 }
 
 .metric-icon {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .metric-card.balance .metric-icon {
-  background: var(--accent-indigo-soft);
-  color: var(--accent-indigo);
+  background: rgba(255, 199, 0, 0.15);
+  color: #FFC700;
+  border: 1px solid rgba(255, 199, 0, 0.3);
 }
 
 .metric-card.income .metric-icon {
-  background: var(--accent-emerald-soft);
-  color: var(--accent-emerald);
+  background: rgba(0, 245, 212, 0.15);
+  color: #00F5D4;
+  border: 1px solid rgba(0, 245, 212, 0.3);
 }
 
 .metric-card.expense .metric-icon {
-  background: var(--accent-rose-soft);
-  color: var(--accent-rose);
+  background: rgba(255, 70, 85, 0.15);
+  color: #FF4655;
+  border: 1px solid rgba(255, 70, 85, 0.3);
 }
 
 .metric-value {
@@ -556,8 +578,10 @@ body {
 }
 
 .accounts-title {
-  font-size: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
   font-weight: 700;
+  letter-spacing: 0.03em;
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -605,8 +629,10 @@ body {
 }
 
 .account-name {
-  font-size: 0.82rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
   font-weight: 700;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
 }
 
@@ -640,8 +666,10 @@ body {
 }
 
 .quick-presets-title {
-  font-size: 0.78rem;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
   font-weight: 700;
+  letter-spacing: 0.04em;
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -663,7 +691,8 @@ body {
   border: 1px solid var(--border-color);
   padding: 0.35rem 0.7rem;
   border-radius: var(--radius-full);
-  font-size: 0.72rem;
+  font-family: var(--font-main);
+  font-size: 0.74rem;
   font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
@@ -715,8 +744,10 @@ body {
 }
 
 .card-title {
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
   font-weight: 700;
+  letter-spacing: 0.03em;
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -750,8 +781,8 @@ body {
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: var(--accent-emerald);
-  box-shadow: 0 0 0 3px var(--accent-emerald-glow);
+  border-color: #FF4655;
+  box-shadow: 0 0 0 3px rgba(255, 70, 85, 0.25);
 }
 
 .form-row {
@@ -760,58 +791,82 @@ body {
   gap: 0.75rem;
 }
 
-/* 3-Way Segment Selector */
+/* 3-Way Segment Selector (Valorant Tactical Selector) */
 .type-segmented {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.3rem;
   background: var(--bg-surface-elevated);
   padding: 0.25rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   margin-bottom: 0.9rem;
 }
 
 .type-btn {
-  padding: 0.5rem 0.3rem;
+  padding: 0.52rem 0.3rem;
   text-align: center;
-  font-size: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
   font-weight: 700;
   border-radius: var(--radius-sm);
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   background: transparent;
   color: var(--text-secondary);
   transition: all var(--transition-fast);
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
 .type-btn.active.expense {
-  background: var(--accent-rose);
-  color: #FFFFFF;
-  box-shadow: 0 2px 8px var(--accent-rose-glow);
+  background: #FF4655;
+  color: #ECE8E1;
+  border-color: rgba(255, 70, 85, 0.5);
+  box-shadow: 0 2px 10px rgba(255, 70, 85, 0.4);
 }
 
 .type-btn.active.income {
-  background: var(--accent-emerald);
-  color: #FFFFFF;
-  box-shadow: 0 2px 8px var(--accent-emerald-glow);
+  background: #00F5D4;
+  color: #0F1923;
+  border-color: rgba(0, 245, 212, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 245, 212, 0.4);
 }
 
 .type-btn.active.transfer {
-  background: var(--accent-indigo);
-  color: #FFFFFF;
-  box-shadow: 0 2px 8px var(--accent-indigo-glow);
+  background: #FFC700;
+  color: #0F1923;
+  border-color: rgba(255, 199, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(255, 199, 0, 0.4);
 }
 
 .amount-preview {
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  color: var(--accent-emerald);
-  font-weight: 600;
+  color: #00F5D4;
+  font-weight: 700;
   margin-top: 0.2rem;
   text-align: right;
   min-height: 1.1rem;
+}
+
+/* Modern SVG Icon Utility */
+.svg-icon {
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.15em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 /* --- Filter & Search Controls --- */
@@ -1509,8 +1564,10 @@ body {
 }
 
 .modal-title {
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   color: var(--text-primary);
 }
 
@@ -1571,23 +1628,24 @@ body {
 }
 
 .mobile-nav-item.active {
-  color: var(--accent-emerald);
+  color: #FF4655;
+  font-weight: 700;
 }
 
 .mobile-fab-button {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-indigo) 100%);
-  color: #FFF;
-  border: none;
+  background: linear-gradient(135deg, #FF4655 0%, #E03544 100%);
+  color: #ECE8E1;
+  border: 2px solid var(--bg-body);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  box-shadow: 0 4px 16px var(--accent-emerald-glow);
+  font-size: 1.4rem;
+  box-shadow: 0 4px 18px rgba(255, 70, 85, 0.45);
   cursor: pointer;
-  margin-top: -16px;
+  margin-top: -18px;
   transition: transform var(--transition-bounce);
 }
 

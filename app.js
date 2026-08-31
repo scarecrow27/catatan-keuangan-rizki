@@ -57,12 +57,14 @@ function getInitialGoogleSheetUrl() {
   try {
     const params = new URLSearchParams(window.location.search);
     const urlParam = params.get('sheet') || params.get('gsheet');
-    if (urlParam) {
+    if (urlParam && urlParam.startsWith('http')) {
       localStorage.setItem('finsmart_gsheet_url', urlParam);
       return urlParam;
     }
   } catch (e) { }
-  return localStorage.getItem('finsmart_gsheet_url') || DEFAULT_GOOGLE_SHEET_URL;
+  const saved = localStorage.getItem('finsmart_gsheet_url');
+  if (saved && saved.startsWith('http')) return saved;
+  return DEFAULT_GOOGLE_SHEET_URL;
 }
 
 function getInitialSyncKey() {
@@ -622,7 +624,6 @@ async function pushDataToGoogleSheet(showNotification = true) {
     updateGoogleSheetUI('syncing');
     await fetch(state.googleSheetUrl, {
       method: 'POST',
-      mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
@@ -632,10 +633,23 @@ async function pushDataToGoogleSheet(showNotification = true) {
       showToast('Data berhasil disimpan ke Google Spreadsheet! 📊');
     }
   } catch (err) {
-    console.warn('Google Sheet Push Error:', err);
-    updateGoogleSheetUI('offline');
-    if (showNotification) {
-      showToast('Gagal mengirim data ke Google Spreadsheet.', 'danger');
+    try {
+      await fetch(state.googleSheetUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      updateGoogleSheetUI('synced');
+      if (showNotification) {
+        showToast('Data berhasil disimpan ke Google Spreadsheet! 📊');
+      }
+    } catch (err2) {
+      console.warn('Google Sheet Push Error:', err2);
+      updateGoogleSheetUI('offline');
+      if (showNotification) {
+        showToast('Gagal mengirim data ke Google Spreadsheet.', 'danger');
+      }
     }
   }
 }
@@ -807,38 +821,43 @@ function fallbackCopyText(text) {
   document.body.removeChild(textArea);
 }
 
-// --- Theme Management ---
+// --- Theme Management (Valorant Design System) ---
 function initTheme() {
-  const savedTheme = localStorage.getItem('finsmart_theme') || 'light';
+  const savedTheme = localStorage.getItem('finsmart_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   updateThemeIcon(savedTheme);
   updateMetaThemeColor(savedTheme);
 }
 
 function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('finsmart_theme', newTheme);
   updateThemeIcon(newTheme);
   updateMetaThemeColor(newTheme);
 
   renderMonthlyAnalytics();
-  showToast(`Beralih ke mode ${newTheme === 'dark' ? 'Gelap 🌙' : 'Terang ☀️'}`, 'info');
+  showToast(`Beralih ke mode ${newTheme === 'dark' ? 'Valorant Dark' : 'Clean Light'}`, 'info');
 }
 
 function updateThemeIcon(theme) {
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
-    btn.innerHTML = theme === 'dark' ? '☀️' : '🌙';
-    btn.title = theme === 'dark' ? 'Ubah ke Mode Terang' : 'Ubah ke Mode Gelap';
+    if (theme === 'light') {
+      btn.innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      btn.title = 'Ubah ke Mode Valorant Dark';
+    } else {
+      btn.innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+      btn.title = 'Ubah ke Mode Terang';
+    }
   }
 }
 
 function updateMetaThemeColor(theme) {
   const meta = document.getElementById('metaThemeColor');
   if (meta) {
-    meta.setAttribute('content', theme === 'dark' ? '#090D16' : '#F8FAFC');
+    meta.setAttribute('content', theme === 'dark' ? '#0F1923' : '#ECE8E1');
   }
 }
 
@@ -1472,13 +1491,13 @@ function renderMonthlyAnalytics() {
           {
             label: 'Pemasukan',
             data: incArray,
-            backgroundColor: '#10B981',
+            backgroundColor: '#00F5D4',
             borderRadius: 4
           },
           {
             label: 'Pengeluaran',
             data: expArray,
-            backgroundColor: '#F43F5E',
+            backgroundColor: '#FF4655',
             borderRadius: 4
           }
         ]
@@ -1489,13 +1508,13 @@ function renderMonthlyAnalytics() {
         scales: {
           x: {
             grid: { display: false },
-            ticks: { color: textColor, font: { family: 'Montserrat', size: 9 }, maxRotation: 45 }
+            ticks: { color: textColor, font: { family: 'Outfit', size: 9.5 }, maxRotation: 45 }
           },
           y: {
             grid: { color: gridColor },
             ticks: {
               color: textColor,
-              font: { family: 'Montserrat', size: 10 },
+              font: { family: 'Outfit', size: 10 },
               callback: function (val) {
                 return (val >= 1000000 ? (val / 1000000).toFixed(1) + ' jt' : (val / 1000) + ' rb');
               }
@@ -1507,7 +1526,7 @@ function renderMonthlyAnalytics() {
             position: 'top',
             labels: {
               color: textColor,
-              font: { family: 'Montserrat', size: 11 },
+              font: { family: 'Outfit', size: 11, weight: 600 },
               usePointStyle: true
             }
           },
@@ -1524,9 +1543,9 @@ function renderMonthlyAnalytics() {
   }
 
   // 8. Render Detailed Tables: Total Pengeluaran, Pemasukan, dan Transfer per Kategori Bulan Ini
-  renderMonthlyCategoryTable('monthExpenseCategoryTableBody', state.categories.expense || [], expenseCategoryTotals, expenseCategoryCounts, monthlyExpense, '#F43F5E');
-  renderMonthlyCategoryTable('monthIncomeCategoryTableBody', state.categories.income || [], incomeCategoryTotals, incomeCategoryCounts, monthlyIncome, '#10B981');
-  renderMonthlyCategoryTable('monthTransferCategoryTableBody', state.categories.transfer || [], transferCategoryTotals, transferCategoryCounts, monthlyTransfer, '#6366F1');
+  renderMonthlyCategoryTable('monthExpenseCategoryTableBody', state.categories.expense || [], expenseCategoryTotals, expenseCategoryCounts, monthlyExpense, '#FF4655');
+  renderMonthlyCategoryTable('monthIncomeCategoryTableBody', state.categories.income || [], incomeCategoryTotals, incomeCategoryCounts, monthlyIncome, '#00F5D4');
+  renderMonthlyCategoryTable('monthTransferCategoryTableBody', state.categories.transfer || [], transferCategoryTotals, transferCategoryCounts, monthlyTransfer, '#FFC700');
 
   // 9. Render Transfer Recap Module
   renderMonthlyTransferRecap(monthlyTransferList, transferRoutes, monthlyTransfer, monthlyTransferFee);
@@ -1584,7 +1603,7 @@ function renderCategoryDonut(canvasId, categoriesList, totalsMap, instanceProp, 
           position: 'bottom',
           labels: {
             color: textColor,
-            font: { family: 'Montserrat', size: 9.5 },
+            font: { family: 'Outfit', size: 9.5 },
             padding: 8,
             usePointStyle: true
           }

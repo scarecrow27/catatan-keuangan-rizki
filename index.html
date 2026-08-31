@@ -15,10 +15,10 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="format-detection" content="telephone=no" />
 
-  <!-- Fonts & Stylesheet -->
+  <!-- Fonts & Stylesheet (Option 2: Cyberpunk & Futuristic - Orbitron, Chakra Petch, Outfit, Space Mono) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Orbitron:wght@500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 
   <!-- Chart.js CDN for interactive visual analytics -->
@@ -38,11 +38,11 @@
     <div class="nav-content">
       <div class="brand-logo">
         <div class="brand-icon-wrapper">
-          <span>💳</span>
+          <svg class="svg-icon" style="width: 22px; height: 22px;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
         <div>
-          <span class="brand-title">FinSmart</span>
-          <span class="brand-subtitle">Smart Finance App</span>
+          <span class="brand-title">FinSmart <span style="font-size: 0.6em; color: #FF4655; font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.08em;">// VLR</span></span>
+          <span class="brand-subtitle">Smart Tactical Finance</span>
         </div>
       </div>
 
@@ -50,45 +50,47 @@
         <!-- Google Sheets Sync Status Pill Button -->
         <button class="cloud-sync-pill gsheet-pill-btn" onclick="openGoogleSheetsModal()" id="gsheetNavBtn" title="Database Google Spreadsheet">
           <span class="sync-dot" id="gsheetStatusDot"></span>
-          <span id="gsheetStatusText">Google Sheets</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span id="gsheetStatusText">Sheets</span>
         </button>
 
         <!-- Cloud Sync Status Pill Button -->
         <button class="cloud-sync-pill" onclick="openCloudSyncModal()" id="cloudSyncNavBtn" title="Sinkronisasi Cloud Multi-Perangkat">
           <span class="sync-dot" id="syncStatusDot"></span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           <span id="syncStatusText">Cloud</span>
         </button>
 
         <!-- Theme Toggle Button -->
         <button id="themeToggleBtn" class="btn btn-icon-only" onclick="toggleTheme()" title="Ubah Tema (Gelap/Terang)">
-          🌙
+          <svg class="svg-icon" id="themeSvgIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
         </button>
 
         <!-- Desktop Action Buttons -->
         <button class="btn btn-secondary btn-sm desktop-only-btn" onclick="openManageAccountsModal()" title="Kelola Akun & Saldo Awal">
-          <span>🏦</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
           <span>Akun</span>
         </button>
 
         <button class="btn btn-secondary btn-sm desktop-only-btn" onclick="openManageCategoriesModal()" title="Kelola Kategori">
-          <span>🏷️</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
           <span>Kategori</span>
         </button>
 
         <button class="btn btn-secondary btn-sm desktop-only-btn" onclick="exportToCSV()" title="Unduh CSV">
-          <span>📊</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>CSV</span>
         </button>
 
         <!-- Quick Transfer & Add Buttons -->
         <button class="btn btn-transfer desktop-only-btn" onclick="openAddTxModal('transfer')" title="Pindah Saldo">
-          <span>⇄</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
           <span>Transfer</span>
         </button>
 
         <button class="btn btn-primary" onclick="openAddTxModal('expense')" title="Tambah Transaksi">
-          <span>➕</span>
-          <span>Transaksi</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Catat</span>
         </button>
       </div>
     </div>
@@ -102,36 +104,42 @@
       <!-- Saldo Bersih -->
       <div class="metric-card balance">
         <div class="metric-header">
-          <span class="metric-title">Total Saldo Bersih Saat Ini</span>
-          <div class="metric-icon">💰</div>
+          <span class="metric-title">Total Saldo Bersih</span>
+          <div class="metric-icon">
+            <svg class="svg-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
         </div>
         <div id="metricBalance" class="metric-value">Rp 0</div>
         <div class="metric-footer">
-          <span id="savingsRateBadge" class="metric-badge badge-positive">📈 0% Rasio Tabungan</span>
+          <span id="savingsRateBadge" class="metric-badge badge-positive">0% Rasio Tabungan</span>
         </div>
       </div>
 
       <!-- Total Pemasukan Global -->
       <div class="metric-card income">
         <div class="metric-header">
-          <span class="metric-title">Akumulasi Semua Pemasukan</span>
-          <div class="metric-icon">📥</div>
+          <span class="metric-title">Total Pemasukan</span>
+          <div class="metric-icon">
+            <svg class="svg-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
         </div>
         <div id="metricIncome" class="metric-value">Rp 0</div>
         <div class="metric-footer">
-          <span>Semua pemasukan aktif tercatat</span>
+          <span>Akumulasi pemasukan</span>
         </div>
       </div>
 
       <!-- Total Pengeluaran Global -->
       <div class="metric-card expense">
         <div class="metric-header">
-          <span class="metric-title">Akumulasi Semua Pengeluaran</span>
-          <div class="metric-icon">📤</div>
+          <span class="metric-title">Total Pengeluaran</span>
+          <div class="metric-icon">
+            <svg class="svg-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+          </div>
         </div>
         <div id="metricExpense" class="metric-value">Rp 0</div>
         <div class="metric-footer">
-          <span>Semua pengeluaran aktif tercatat</span>
+          <span>Akumulasi pengeluaran</span>
         </div>
       </div>
     </section>
@@ -140,10 +148,12 @@
     <section class="accounts-section">
       <div class="accounts-header">
         <div class="accounts-title">
-          <span>💳</span> Dompet & Rekening Saya
+          <svg class="svg-icon" style="color: #FF4655;" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          <span>Dompet & Rekening</span>
         </div>
         <button class="btn btn-secondary btn-sm" onclick="openManageAccountsModal()">
-          <span>⚙️</span> Kelola Akun
+          <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Kelola Akun</span>
         </button>
       </div>
       <div id="accountsGrid" class="accounts-grid"></div>
@@ -152,23 +162,25 @@
     <!-- Quick Presets Bar -->
     <section class="quick-presets-section">
       <div class="quick-presets-title">
-        <span>⚡ Cepat:</span>
+        <svg class="svg-icon" style="color: #FFC700;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>Preset Cepat:</span>
       </div>
       <div class="quick-chips-wrapper">
         <button class="quick-chip" onclick="applyQuickPreset('Kopi & Cemilan', 25000, 'makanan', 'expense', 'cash')">
-          <span>☕</span> Kopi (25rb Cash)
+          Kopi (25rb Cash)
         </button>
         <button class="quick-chip" onclick="applyQuickPreset('Isi Bensin Motor', 35000, 'transport', 'expense', 'gopay')">
-          <span>⛽</span> Bensin (35rb Gopay)
+          Bensin (35rb Gopay)
         </button>
         <button class="quick-chip" onclick="applyQuickPreset('Makan Siang', 30000, 'makanan', 'expense', 'cash')">
-          <span>🍜</span> Makan (30rb Cash)
+          Makan (30rb Cash)
         </button>
         <button class="quick-chip" onclick="applyQuickPreset('Belanja Harian', 120000, 'belanja', 'expense', 'mandiri')">
-          <span>🛒</span> Belanja (120rb Mandiri)
+          Belanja (120rb Mandiri)
         </button>
         <button class="quick-chip chip-transfer" onclick="openAddTxModal('transfer')">
-          <span>⇄</span> Pindah Saldo / Topup
+          <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          Transfer / Topup
         </button>
       </div>
     </section>
@@ -176,16 +188,20 @@
     <!-- Navigation Tabs (Desktop View) -->
     <nav class="app-tabs" aria-label="Menu Tab Aplikasi">
       <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')">
-        <span>📋</span> Transaksi & Riwayat
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Transaksi</span>
       </button>
       <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">
-        <span>📊</span> Analisis & Laporan Bulanan
+        <svg class="svg-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Analitik Bulanan</span>
       </button>
       <button class="tab-btn" data-tab="goals" onclick="switchTab('goals')">
-        <span>🎯</span> Target Tabungan & Wishlist
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <span>Target Tabungan</span>
       </button>
       <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')">
-        <span>⚙️</span> Pengaturan & Cloud Sync
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Pengaturan</span>
       </button>
     </nav>
 
@@ -197,21 +213,25 @@
         <section class="card">
           <div class="card-header">
             <h2 class="card-title">
-              <span>✍️</span> Catat Transaksi
+              <svg class="svg-icon" style="color: #FF4655;" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span>Catat Transaksi</span>
             </h2>
-            <span style="font-size: 0.72rem; color: var(--text-muted);">Form Cepat</span>
+            <span style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">// QUICK ENTRY</span>
           </div>
 
           <!-- 3-Way Segment Selector -->
           <div class="type-segmented">
             <button type="button" id="typeBtnExpenseInline" class="type-btn active expense" onclick="setInlineFormType('expense')">
-              💸 Pengeluaran
+              <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+              <span>Pengeluaran</span>
             </button>
             <button type="button" id="typeBtnIncomeInline" class="type-btn" onclick="setInlineFormType('income')">
-              💰 Pemasukan
+              <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              <span>Pemasukan</span>
             </button>
             <button type="button" id="typeBtnTransferInline" class="type-btn" onclick="setInlineFormType('transfer')">
-              ⇄ Transfer
+              <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+              <span>Transfer</span>
             </button>
           </div>
 
@@ -791,31 +811,32 @@
       <section class="card" style="max-width: 650px; margin: 0 auto;">
         <div class="card-header">
           <h2 class="card-title">
-            <span>⚙️</span> Pengaturan & Manajemen Data
+            <svg class="svg-icon" style="color: #FF4655;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Pengaturan &amp; Database</span>
           </h2>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
           
           <!-- Google Spreadsheet Integration Button -->
-          <div class="manage-item" style="padding: 0.85rem; cursor: pointer; background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%); border-color: var(--accent-emerald);" onclick="openGoogleSheetsModal()">
+          <div class="manage-item" style="padding: 0.85rem; cursor: pointer; background: rgba(0, 245, 212, 0.08); border-color: #00F5D4;" onclick="openGoogleSheetsModal()">
             <div class="manage-item-info">
-              <span style="font-size: 1.4rem;">📊</span>
+              <svg class="svg-icon" style="width: 24px; height: 24px; color: #00F5D4;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
               <div>
-                <div class="manage-item-name" style="color: var(--accent-emerald-dark); font-weight: 800;">Database Google Spreadsheet</div>
-                <div class="manage-item-sub" id="settingsGSheetSubText">Simpan data otomatis ke Google Sheets pribadi (seperti Excel online)</div>
+                <div class="manage-item-name" style="color: #00F5D4; font-weight: 800;">Database Google Spreadsheet</div>
+                <div class="manage-item-sub" id="settingsGSheetSubText">Simpan data otomatis ke Google Sheets pribadi Anda</div>
               </div>
             </div>
-            <span class="metric-badge badge-positive" id="settingsGSheetBadge">Atur Spreadsheet</span>
+            <span class="metric-badge badge-positive" id="settingsGSheetBadge">Atur Sheets</span>
           </div>
 
           <!-- Cloud Sync Quick Button -->
-          <div class="manage-item" style="padding: 0.85rem; cursor: pointer; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%); border-color: var(--accent-indigo);" onclick="openCloudSyncModal()">
+          <div class="manage-item" style="padding: 0.85rem; cursor: pointer; background: rgba(255, 70, 85, 0.08); border-color: #FF4655;" onclick="openCloudSyncModal()">
             <div class="manage-item-info">
-              <span style="font-size: 1.4rem;">☁️</span>
+              <svg class="svg-icon" style="width: 24px; height: 24px; color: #FF4655;" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
               <div>
-                <div class="manage-item-name" style="color: var(--accent-indigo); font-weight: 800;">Sinkronisasi Cloud Multi-Perangkat</div>
-                <div class="manage-item-sub" id="settingsSyncSubText">Hubungkan data agar sama persis di HP & Laptop secara otomatis</div>
+                <div class="manage-item-name" style="color: #FF4655; font-weight: 800;">Sinkronisasi Cloud Multi-Perangkat</div>
+                <div class="manage-item-sub" id="settingsSyncSubText">Hubungkan data agar sama di HP & Laptop via Kunci Sinkronisasi</div>
               </div>
             </div>
             <span class="metric-badge badge-positive" id="settingsSyncBadge">Atur Cloud</span>
@@ -823,91 +844,91 @@
 
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="openEditMonthlyTargetModal()">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">🎯</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #FFC700;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
               <div>
-                <div class="manage-item-name">Atur Target Tabungan Bulanan</div>
+                <div class="manage-item-name">Target Tabungan Bulanan</div>
                 <div class="manage-item-sub">Sesuaikan target nominal tabungan per bulan</div>
               </div>
             </div>
-            <span>➡️</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
 
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="openManageAccountsModal()">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">🏦</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #00F5D4;" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
               <div>
-                <div class="manage-item-name">Kelola Akun & Saldo Awal</div>
+                <div class="manage-item-name">Kelola Akun &amp; Saldo Awal</div>
                 <div class="manage-item-sub">Atur Cash, Bank Mandiri, Bank Kaltimtara, Gopay, atau tambah bank baru</div>
               </div>
             </div>
-            <span>➡️</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
 
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="openManageCategoriesModal()">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">🏷️</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #FF4655;" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
               <div>
                 <div class="manage-item-name">Kelola Kategori Transaksi</div>
                 <div class="manage-item-sub">Tambah, ubah, atau hapus kategori pengeluaran, pemasukan, dan transfer</div>
               </div>
             </div>
-            <span>➡️</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
 
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="exportToCSV()">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">📊</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #00F5D4;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <div>
                 <div class="manage-item-name">Ekspor ke Excel / CSV</div>
                 <div class="manage-item-sub">Unduh laporan transaksi lengkap dalam format spreadsheet</div>
               </div>
             </div>
-            <span>⬇️</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </div>
 
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="backupJSON()">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">💾</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #FFC700;" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
               <div>
                 <div class="manage-item-name">Download Backup (JSON)</div>
                 <div class="manage-item-sub">Simpan seluruh data akun dan transaksi untuk dipindahkan manual</div>
               </div>
             </div>
-            <span>⬇️</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </div>
 
           <label class="manage-item" style="padding: 0.85rem; cursor: pointer;">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">🔄</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #FF4655;" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
               <div>
                 <div class="manage-item-name">Pulihkan Data (Restore JSON)</div>
                 <div class="manage-item-sub">Impor data backup dari file JSON yang telah disimpan</div>
               </div>
             </div>
-            <span>⬆️</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             <input type="file" accept=".json" style="display: none;" onchange="handleRestoreJSON(event)" />
           </label>
 
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="toggleTheme()">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">🌓</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #ECE8E1;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
               <div>
                 <div class="manage-item-name">Ganti Tema (Gelap / Terang)</div>
-                <div class="manage-item-sub">Ubah tampilan aplikasi sesuai kenyamanan mata Anda</div>
+                <div class="manage-item-sub">Ubah tampilan antara Valorant Dark &amp; Light</div>
               </div>
             </div>
-            <span>🌙</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg>
           </div>
 
-          <div class="manage-item" style="padding: 0.85rem; border-color: rgba(244, 63, 94, 0.3); cursor: pointer;" onclick="resetAllData()">
+          <div class="manage-item" style="padding: 0.85rem; border-color: rgba(255, 70, 85, 0.4); cursor: pointer;" onclick="resetAllData()">
             <div class="manage-item-info">
-              <span style="font-size: 1.3rem;">🗑️</span>
+              <svg class="svg-icon" style="width: 20px; height: 20px; color: #FF4655;" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
               <div>
-                <div class="manage-item-name" style="color: var(--accent-rose);">Reset Semua Data</div>
-                <div class="manage-item-sub">Hapus seluruh data keuangan dan kembalikan ke default</div>
+                <div class="manage-item-name" style="color: #FF4655;">Reset Semua Data</div>
+                <div class="manage-item-sub">Hapus seluruh data keuangan lokal dan kembalikan ke default</div>
               </div>
             </div>
-            <span>⚠️</span>
+            <span style="color: #FF4655;">⚠️</span>
           </div>
 
         </div>
@@ -916,32 +937,32 @@
 
   </main>
 
-  <!-- Mobile Bottom App Bar Navigation (Android / iOS / HarmonyOS) -->
+  <!-- Mobile Bottom App Bar Navigation (Android / iOS / HarmonyOS - Valorant HUD) -->
   <nav class="mobile-bottom-nav" aria-label="Navigasi Bawah Mobile">
     <div class="mobile-nav-items">
       <button class="mobile-nav-item active" data-mobile-tab="dashboard" onclick="switchTab('dashboard')">
-        <span class="nav-icon">🏠</span>
+        <svg class="svg-icon" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Beranda</span>
       </button>
 
       <button class="mobile-nav-item" data-mobile-tab="analytics" onclick="switchTab('analytics')">
-        <span class="nav-icon">📊</span>
+        <svg class="svg-icon" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         <span>Analitik</span>
       </button>
 
       <!-- Center Floating Action Button -->
       <button class="mobile-fab-button" onclick="openAddTxModal('expense')" title="Tambah Cepat" aria-label="Tambah Transaksi">
-        ➕
+        <svg class="svg-icon" style="width: 24px; height: 24px;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       </button>
 
       <button class="mobile-nav-item" data-mobile-tab="goals" onclick="switchTab('goals')">
-        <span class="nav-icon">🎯</span>
+        <svg class="svg-icon" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
         <span>Target</span>
       </button>
 
       <button class="mobile-nav-item" data-mobile-tab="settings" onclick="switchTab('settings')">
-        <span class="nav-icon">⚙️</span>
-        <span>Pengaturan</span>
+        <svg class="svg-icon" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Setelan</span>
       </button>
     </div>
   </nav>
@@ -958,13 +979,16 @@
       <!-- 3-Way Segment Selector in Modal -->
       <div class="type-segmented">
         <button type="button" id="typeBtnExpense" class="type-btn active expense" onclick="setFormType('expense')">
-          💸 Pengeluaran
+          <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+          <span>Pengeluaran</span>
         </button>
         <button type="button" id="typeBtnIncome" class="type-btn" onclick="setFormType('income')">
-          💰 Pemasukan
+          <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <span>Pemasukan</span>
         </button>
         <button type="button" id="typeBtnTransfer" class="type-btn" onclick="setFormType('transfer')">
-          ⇄ Transfer
+          <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <span>Transfer</span>
         </button>
       </div>
 
