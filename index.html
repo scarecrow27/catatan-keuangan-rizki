@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Catatan Keuangan Rizki</title>
-  <meta name="description" content="Aplikasi pencatatan keuangan mandiri modern dengan multi-rekening saldo awal, transfer antar akun, kelola kategori kustom, target tabungan bulanan, dan analisis total pemasukan/pengeluaran/transfer per bulan per kategori." />
+  <meta name="description" content="Aplikasi pencatatan keuangan mandiri modern dengan multi-rekening saldo awal, transfer antar akun, kelola kategori kustom, target tabungan bulanan, dan sinkronisasi data cloud multi-perangkat." />
 
   <!-- PWA & Mobile OS Meta Tags -->
   <meta name="theme-color" content="#10B981" id="metaThemeColor" />
@@ -47,6 +47,18 @@
       </div>
 
       <div class="nav-actions">
+        <!-- Google Sheets Sync Status Pill Button -->
+        <button class="cloud-sync-pill gsheet-pill-btn" onclick="openGoogleSheetsModal()" id="gsheetNavBtn" title="Database Google Spreadsheet">
+          <span class="sync-dot" id="gsheetStatusDot"></span>
+          <span id="gsheetStatusText">Google Sheets</span>
+        </button>
+
+        <!-- Cloud Sync Status Pill Button -->
+        <button class="cloud-sync-pill" onclick="openCloudSyncModal()" id="cloudSyncNavBtn" title="Sinkronisasi Cloud Multi-Perangkat">
+          <span class="sync-dot" id="syncStatusDot"></span>
+          <span id="syncStatusText">Cloud</span>
+        </button>
+
         <!-- Theme Toggle Button -->
         <button id="themeToggleBtn" class="btn btn-icon-only" onclick="toggleTheme()" title="Ubah Tema (Gelap/Terang)">
           🌙
@@ -173,7 +185,7 @@
         <span>🎯</span> Target Tabungan & Wishlist
       </button>
       <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')">
-        <span>⚙️</span> Pengaturan & Backup
+        <span>⚙️</span> Pengaturan & Cloud Sync
       </button>
     </nav>
 
@@ -774,7 +786,7 @@
       </section>
     </div>
 
-    <!-- TAB 4: PENGATURAN & BACKUP (Mobile & Desktop) -->
+    <!-- TAB 4: PENGATURAN & BACKUP & CLOUD SYNC (Mobile & Desktop) -->
     <div id="tab-settings" class="tab-panel">
       <section class="card" style="max-width: 650px; margin: 0 auto;">
         <div class="card-header">
@@ -785,6 +797,30 @@
 
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
           
+          <!-- Google Spreadsheet Integration Button -->
+          <div class="manage-item" style="padding: 0.85rem; cursor: pointer; background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%); border-color: var(--accent-emerald);" onclick="openGoogleSheetsModal()">
+            <div class="manage-item-info">
+              <span style="font-size: 1.4rem;">📊</span>
+              <div>
+                <div class="manage-item-name" style="color: var(--accent-emerald-dark); font-weight: 800;">Database Google Spreadsheet</div>
+                <div class="manage-item-sub" id="settingsGSheetSubText">Simpan data otomatis ke Google Sheets pribadi (seperti Excel online)</div>
+              </div>
+            </div>
+            <span class="metric-badge badge-positive" id="settingsGSheetBadge">Atur Spreadsheet</span>
+          </div>
+
+          <!-- Cloud Sync Quick Button -->
+          <div class="manage-item" style="padding: 0.85rem; cursor: pointer; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%); border-color: var(--accent-indigo);" onclick="openCloudSyncModal()">
+            <div class="manage-item-info">
+              <span style="font-size: 1.4rem;">☁️</span>
+              <div>
+                <div class="manage-item-name" style="color: var(--accent-indigo); font-weight: 800;">Sinkronisasi Cloud Multi-Perangkat</div>
+                <div class="manage-item-sub" id="settingsSyncSubText">Hubungkan data agar sama persis di HP & Laptop secara otomatis</div>
+              </div>
+            </div>
+            <span class="metric-badge badge-positive" id="settingsSyncBadge">Atur Cloud</span>
+          </div>
+
           <div class="manage-item" style="padding: 0.85rem; cursor: pointer;" onclick="openEditMonthlyTargetModal()">
             <div class="manage-item-info">
               <span style="font-size: 1.3rem;">🎯</span>
@@ -834,7 +870,7 @@
               <span style="font-size: 1.3rem;">💾</span>
               <div>
                 <div class="manage-item-name">Download Backup (JSON)</div>
-                <div class="manage-item-sub">Simpan seluruh data akun dan transaksi untuk dipindahkan ke HP/laptop lain</div>
+                <div class="manage-item-sub">Simpan seluruh data akun dan transaksi untuk dipindahkan manual</div>
               </div>
             </div>
             <span>⬇️</span>
@@ -1006,6 +1042,139 @@
           </button>
           <button type="submit" class="btn btn-primary" style="flex: 1.5;">
             <span>💾</span> Simpan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Dialog: Sinkronisasi Cloud Multi-Perangkat (Cloud Sync) -->
+  <div id="cloudSyncModal" class="modal-overlay" onclick="if(event.target === this) closeModal('cloudSyncModal')">
+    <div class="modal-card">
+      <div class="modal-handle-bar"></div>
+      <div class="modal-header">
+        <h3 class="modal-title">☁️ Sinkronisasi Multi-Perangkat</h3>
+        <button class="modal-close" onclick="closeModal('cloudSyncModal')">✕</button>
+      </div>
+
+      <div style="background: var(--bg-surface-elevated); padding: 0.85rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1rem; font-size: 0.78rem; line-height: 1.5;">
+        📱 <strong>Bagaimana cara agar data sama di HP & Laptop?</strong><br>
+        1. Buat <strong>Kode Kunci Pribadi</strong> Anda sendiri di bawah (misal: <code>rizki-uang-2026</code>).<br>
+        2. Masukkan <strong>kode yang sama persis</strong> di HP dan Laptop Anda.<br>
+        3. Klik <strong>Hubungkan & Sinkronkan</strong>. Setiap transaksi baru otomatis tersinkronisasi!
+      </div>
+
+      <form id="formCloudSync" onsubmit="handleConnectCloudSync(event)">
+        <div class="form-group">
+          <label class="form-label" for="inputSyncKey">Kode Kunci Sinkronisasi Pribadi (*Sync Key*)</label>
+          <input type="text" id="inputSyncKey" class="form-input" required placeholder="Contoh: rizki-finansial-2026" style="font-weight: 700; font-family: var(--font-mono);" />
+        </div>
+
+        <div id="syncStatusInfoBox" style="margin-bottom: 1rem; font-size: 0.75rem; color: var(--text-secondary);">
+          Status saat ini: <strong id="syncModalStatusText">Offline (Tersimpan Lokal)</strong>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.55rem;">
+          <button type="submit" id="btnConnectSync" class="btn btn-primary" style="width: 100%;">
+            <span>☁️</span> Hubungkan & Aktifkan Auto-Sync
+          </button>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="forcePushToCloud()">
+              <span>⬆️</span> Unggah ke Cloud
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="forcePullFromCloud()">
+              <span>⬇️</span> Unduh dari Cloud
+            </button>
+          </div>
+
+          <button type="button" id="btnDisconnectSync" class="btn btn-danger btn-sm" style="margin-top: 0.4rem; display: none;" onclick="disconnectCloudSync()">
+            <span>🔌</span> Putuskan Hubungan Cloud (Kembali Offline)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Dialog: Database Google Spreadsheet -->
+  <div id="googleSheetsModal" class="modal-overlay" onclick="if(event.target === this) closeModal('googleSheetsModal')">
+    <div class="modal-card" style="max-width: 580px;">
+      <div class="modal-handle-bar"></div>
+      <div class="modal-header">
+        <h3 class="modal-title">📊 Database Google Spreadsheet</h3>
+        <button class="modal-close" onclick="closeModal('googleSheetsModal')">✕</button>
+      </div>
+
+      <!-- Panduan Singkat -->
+      <div style="margin-bottom: 1rem;">
+        <div style="font-size: 0.78rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary);">
+          🚀 Panduan Menghubungkan Google Sheets (Hanya 1 Menit):
+        </div>
+
+        <div class="guide-step-card">
+          <div class="step-num">1</div>
+          <div class="guide-step-content">
+            Buka <strong>Google Drive</strong> (<a href="https://drive.google.com" target="_blank" rel="noopener" style="color: var(--accent-indigo); text-decoration: underline;">drive.google.com</a>) & buat <strong>Google Spreadsheet baru</strong>.
+          </div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="step-num">2</div>
+          <div class="guide-step-content">
+            Di menu atas Spreadsheet, klik <strong>Ekstensi (Extensions)</strong> &gt; <strong>Apps Script</strong>.
+          </div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="step-num">3</div>
+          <div class="guide-step-content">
+            Hapus isi skrip lama, lalu salin kode di bawah ini dan tempel di Apps Script:
+            <div style="margin-top: 0.4rem;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="copyGoogleAppsScriptCode()" style="font-weight: 700;">
+                <span>📋</span> Salin Kode Apps Script
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="step-num">4</div>
+          <div class="guide-step-content">
+            Klik <strong>Deploy (Terapkan)</strong> &gt; <strong>New deployment</strong> &gt; Pilih <strong>Web app</strong>.<br>
+            - Akses (Who has access): <strong>Anyone (Siapa saja)</strong><br>
+            - Klik <strong>Deploy</strong> &amp; izinkan akses akun Google Anda.<br>
+            - Salin <strong>Web App URL</strong> (berakhiran <code>/exec</code>) dan tempel di bawah.
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Google Sheet URL -->
+      <form id="formGoogleSheetSync" onsubmit="handleConnectGoogleSheet(event)">
+        <div class="form-group">
+          <label class="form-label" for="inputGoogleSheetUrl">Web App URL Google Apps Script</label>
+          <input type="url" id="inputGoogleSheetUrl" class="form-input" required placeholder="https://script.google.com/macros/s/.../exec" style="font-family: var(--font-mono); font-size: 0.78rem;" />
+        </div>
+
+        <div id="gsheetStatusInfoBox" style="margin-bottom: 1rem; font-size: 0.75rem; color: var(--text-secondary);">
+          Status: <strong id="gsheetModalStatusText">Belum Terhubung (Data disimpan di browser)</strong>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.55rem;">
+          <button type="submit" id="btnConnectGSheet" class="btn btn-primary" style="width: 100%;">
+            <span>📊</span> Hubungkan &amp; Aktifkan Auto-Sync
+          </button>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="forcePushToGoogleSheet()">
+              <span>⬆️</span> Kirim ke Sheets
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="forcePullFromGoogleSheet()">
+              <span>⬇️</span> Ambil dari Sheets
+            </button>
+          </div>
+
+          <button type="button" id="btnDisconnectGSheet" class="btn btn-danger btn-sm" style="margin-top: 0.4rem; display: none;" onclick="disconnectGoogleSheet()">
+            <span>🔌</span> Putuskan Hubungan Google Spreadsheet
           </button>
         </div>
       </form>

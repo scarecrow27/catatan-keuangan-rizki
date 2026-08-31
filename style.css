@@ -245,6 +245,49 @@ body {
   gap: 0.4rem;
 }
 
+/* Cloud Sync Status Indicator in Nav */
+.cloud-sync-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cloud-sync-pill:hover {
+  border-color: var(--accent-indigo);
+  color: var(--accent-indigo);
+}
+
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #94A3B8;
+}
+
+.sync-dot.synced {
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.sync-dot.syncing {
+  background: #F59E0B;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(0.8); opacity: 0.6; }
+  to { transform: scale(1.2); opacity: 1; }
+}
+
 /* Base Buttons */
 .btn {
   display: inline-flex;
@@ -994,7 +1037,7 @@ body {
 
 /* ==========================================================================
    MONTHLY SAVINGS TARGET & ANALYTICS STYLES
-   ========================================================================== */
+   ========================================================================= */
 
 /* Monthly Savings Target Card */
 .monthly-target-card {
@@ -1587,6 +1630,69 @@ body {
 @keyframes toastSlideIn {
   from { transform: translateY(20px) scale(0.92); opacity: 0; }
   to { transform: translateY(0) scale(1); }
+}
+
+/* --- Google Spreadsheet & Cloud Sync Integration Styles --- */
+.guide-step-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-indigo) 100%);
+  color: #FFFFFF;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.guide-step-content {
+  flex: 1;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.guide-step-content strong {
+  color: var(--text-primary);
+}
+
+.code-snippet-box {
+  background: #0F172A;
+  color: #E2E8F0;
+  border: 1px solid #334155;
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  max-height: 140px;
+  overflow-y: auto;
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.gsheet-pill-btn {
+  background: var(--accent-emerald-soft);
+  color: var(--accent-emerald-dark);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .code-snippet-box {
+  background: #070B14;
+  border-color: #1E293B;
 }
 
 /* ==========================================================================
