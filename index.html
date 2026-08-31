@@ -51,14 +51,14 @@
         <button class="cloud-sync-pill gsheet-pill-btn" onclick="openGoogleSheetsModal()" id="gsheetNavBtn" title="Database Google Spreadsheet">
           <span class="sync-dot" id="gsheetStatusDot"></span>
           <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          <span id="gsheetStatusText">Sheets</span>
+          <span id="gsheetStatusText" class="pill-text-desktop">Sheets</span>
         </button>
 
         <!-- Cloud Sync Status Pill Button -->
         <button class="cloud-sync-pill" onclick="openCloudSyncModal()" id="cloudSyncNavBtn" title="Sinkronisasi Cloud Multi-Perangkat">
           <span class="sync-dot" id="syncStatusDot"></span>
           <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-          <span id="syncStatusText">Cloud</span>
+          <span id="syncStatusText" class="pill-text-desktop">Cloud</span>
         </button>
 
         <!-- Theme Toggle Button -->
@@ -88,7 +88,7 @@
           <span>Transfer</span>
         </button>
 
-        <button class="btn btn-primary" onclick="openAddTxModal('expense')" title="Tambah Transaksi">
+        <button class="btn btn-primary desktop-only-btn" onclick="openAddTxModal('expense')" title="Tambah Transaksi">
           <svg class="svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           <span>Catat</span>
         </button>
